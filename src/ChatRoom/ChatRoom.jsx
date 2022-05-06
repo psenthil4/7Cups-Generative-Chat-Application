@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
 import "./ChatRoom.css";
-import useChat from "../useChat";
 
 let endPoint = "http://35.188.189.237:8000";
 // let socket = io.connect(`${endPoint}`);
