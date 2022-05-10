@@ -102,7 +102,7 @@ section.chat__body {
     cursor: pointer;
     background-color: #1F8FFD;
     font-size: .8rem;
-    color: rgb(0, 0, 0);
+    color: #fff;
     border-radius: .4rem;
 }
 /* CHAT SUGGESTIONS */
