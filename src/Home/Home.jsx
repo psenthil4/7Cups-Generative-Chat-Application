@@ -27,8 +27,15 @@ const Home = () => {
     else {
       // setListener(args["is_listener"]);
       console.log("Logged in successfully");
-      let room = args["is_listener"] ? "listener" : "client"
-      history.push(`/room?type=${room}`);
+      let room = args["is_listener"]
+      let type = args["show_suggestions"]
+      if (room && type) {
+        history.push(`/room?type=${"listener2"}`);
+      } else if (room) {
+        history.push(`/room?type=${"listener1"}`);
+      } else {
+        history.push(`/room?type=${"client"}`);
+      }
     }
   });
 
