@@ -15,13 +15,17 @@ let endPoint = "http://35.188.189.237:8000";
 const ChatRoom = (props) => {
   // const { is_listener } = props.match.params;
   const listenerType = new URLSearchParams(props.location.search).get("type")
-  const is_listener = listenerType === "listener"// ? true ? listenerType === "client" : false : ""
+  const is_listener = (listenerType === "listener1" || listenerType === "listener2")// ? true ? listenerType === "client" : false : ""
+  const show_predictions = listenerType === "listener2"
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const [suggestionMessage, setSuggestionMessage] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  const [suggestion, setSuggestion] = useState("");
   const [predictions, setPredictions] = useState([]);
   const [showDialog, setShowDialog] = React.useState(false);
+  const close = () => setShowDialog(false);
+  const cancelRef = React.useRef();
   const data = {
     "Grounding": "Use a short, neutral phrase to continue the conversation",
     "Open Question": "Pose a question to seek open ended information from the client",
@@ -75,6 +79,7 @@ const ChatRoom = (props) => {
   const open = (text) => {
     setShowDialog(true);
     setSuggestionMessage(data[text]);
+    setSuggestion(text);
   };
 
   const onSendMessage = (e) => {
@@ -148,14 +153,29 @@ const ChatRoom = (props) => {
           </div>
         </section>
         <section className="chat__strategies">
-          {is_listener && suggestions.length > 0 && <div className="chat__strategies-container">
+          {show_predictions && is_listener && suggestions.length > 0 && <div className="chat__strategies-container">
             <div className="chat__strategies-group">
-              {suggestions.map(i => (<button onClick={open} className="chat__strategies-button">{data[i]}</button>))}
+              {suggestions.map(i => (<button onClick={open(i)} className="chat__strategies-button">{data[i]}</button>))}
+              {showDialog && (
+                <AlertDialog leastDestructiveRef={cancelRef}>
+                  <AlertDialogLabel>{suggestion}</AlertDialogLabel>
+
+                  <AlertDialogDescription>
+                    {suggestionMessage}
+                  </AlertDialogDescription>
+
+                  <div className="alert-buttons">
+                    <button ref={cancelRef} onClick={close}>
+                      Nevermind, don't delete.
+                     </button>
+                  </div>
+                </AlertDialog>
+              )}
             </div>
           </div>}
         </section>
         <section className="chat__suggestion">
-          {is_listener && predictions.length > 0 && <div className="chat__suggestion-container">
+          {show_predictions && is_listener && predictions.length > 0 && <div className="chat__suggestion-container">
             <div className="chat__suggestion-group">
               {predictions.map(i => (<button onClick={() => onSelectPred(i)} className="chat__suggestion-button">{i}</button>))}
             </div>
