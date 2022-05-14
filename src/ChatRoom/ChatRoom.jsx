@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import ScrollToBottom from 'react-scroll-to-bottom';
 import io from "socket.io-client";
 import "./ChatRoom.css";
 import {
@@ -30,7 +31,7 @@ const ChatRoom = (props) => {
     "Grounding": "Use a short, neutral phrase to continue the conversation",
     "Open Question": "Pose a question to seek open ended information from the client",
     "Closed Question": "Pose a question to seek specific information from the client",
-    "Introduction" : "Greet or exchange introductions with the client",
+    "Introduction/Greeting" : "Greet or exchange introductions with the client",
     "Affirm" : "Offer positive feedback regarding the client's actions",
     "Persuade" : "Offer logical points to the client's conversation",
     "Reflection" : "Reflect on something the client has said",
@@ -76,11 +77,11 @@ const ChatRoom = (props) => {
     setMessage(e.target.value);
   };
 
-  const open = (text) => {
-    setShowDialog(true);
-    setSuggestionMessage(data[text]);
-    setSuggestion(text);
-  };
+  // const open = (text) => {
+  //   setShowDialog(true);
+  //   setSuggestionMessage(data[text]);
+  //   setSuggestion(text);
+  // };
 
   const onSendMessage = (e) => {
     e.preventDefault()
@@ -97,6 +98,12 @@ const ChatRoom = (props) => {
     console.log(predictions.findIndex(i => i === x), "index")
     setMessage(x);
     socketRef.current.emit("log_click", is_listener, predictions.findIndex(i => i === x)); //["itte", "yye"]
+  };
+
+  const onSelectSuggestion = x => {
+    setSuggestion(x);
+    setSuggestionMessage(data[x]);
+    setShowDialog(true);
   };
 
   const onDumpLogs = () => {
@@ -133,7 +140,7 @@ const ChatRoom = (props) => {
         </header>
         <section className="chat__body">
           <div className="chat__body-container" >
-            <ol className="chat__messages-list">
+            <ScrollToBottom className="chat__messages-list">
               {messages?.length > 0 &&
                 messages.map((message, i) => (
                   <li
@@ -149,24 +156,20 @@ const ChatRoom = (props) => {
                     {message.utterance}
                   </li>
                 ))}
-            </ol>
+            </ScrollToBottom>
           </div>
         </section>
         <section className="chat__strategies">
           {show_predictions && is_listener && suggestions.length > 0 && <div className="chat__strategies-container">
             <div className="chat__strategies-group">
-              {suggestions.map(i => (<button onClick={open(i)} className="chat__strategies-button">{data[i]}</button>))}
+              {suggestions.map(i => (<button onClick={() => onSelectSuggestion(i)} className="chat__strategies-button">{i}</button>))}
               {showDialog && (
                 <AlertDialog leastDestructiveRef={cancelRef}>
-                  <AlertDialogLabel>{suggestion}</AlertDialogLabel>
-
-                  <AlertDialogDescription>
-                    {suggestionMessage}
-                  </AlertDialogDescription>
-
+                  
+                  <AlertDialogLabel>{suggestion}: {suggestionMessage}</AlertDialogLabel>
                   <div className="alert-buttons">
-                    <button ref={cancelRef} onClick={close}>
-                      Nevermind, don't delete.
+                    <button ref={cancelRef} onClick={close} className="alert_button">
+                      Close
                      </button>
                   </div>
                 </AlertDialog>
