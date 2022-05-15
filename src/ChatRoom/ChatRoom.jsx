@@ -60,6 +60,7 @@ const ChatRoom = (props) => {
     });
 
     return () => {
+      messageRef.current.scrollIntoView({behavior: "smooth"})
       socketRef.current.disconnect();
     };
   }, [messages])
@@ -164,14 +165,12 @@ const ChatRoom = (props) => {
             <div className="chat__strategies-group">
               {suggestions.map(i => (<button onClick={() => onSelectSuggestion(i)} className="chat__strategies-button">{i}</button>))}
               {showDialog && (
-                <AlertDialog leastDestructiveRef={cancelRef}>
-                  
-                  <AlertDialogLabel>{suggestion}: {suggestionMessage}</AlertDialogLabel>
-                  <div className="alert-buttons">
-                    <button ref={cancelRef} onClick={close} className="alert_button">
+                <AlertDialog className = "alert-buttons" leastDestructiveRef={cancelRef}>
+
+                  <AlertDialogLabel className = "alert-dialog">{suggestion}: {suggestionMessage}</AlertDialogLabel>
+                  <button ref={cancelRef} onClick={close} className="alert_button">
                       Close
-                     </button>
-                  </div>
+                  </button>
                 </AlertDialog>
               )}
             </div>
