@@ -162,13 +162,22 @@ section.chat__body {
 /* Suggestions Section */
 .alert_button {
     display: block;
-    padding: 0.5rem 1rem;
+    padding: 0.2rem 0.5rem;
     border: 1px solid #1F8FFD;
     cursor: pointer;
     background-color: #1F8FFD;
     font-size: .6rem;
     color: rgb(0, 0, 0);
-    border-radius: .4rem;
+    border-radius: .5rem;
+}
+
+.alert_dialog {
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    width: fit-content;
+    border-radius: .9rem;
+    font-size: .4rem;
+    max-width: 50%;
 }
 
 .alert_button:nth-of-type(2) {
