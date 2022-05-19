@@ -169,7 +169,7 @@ const ChatRoom = (props) => {
 
                   <AlertDialogLabel className = "alert-dialog">{suggestion}: {suggestionMessage}</AlertDialogLabel>
                   <button ref={cancelRef} onClick={close} className="alert_button">
-                      Close
+                      Click to continue
                   </button>
                 </AlertDialog>
               )}
