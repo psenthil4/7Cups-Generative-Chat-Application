@@ -98,11 +98,11 @@ section.chat__body {
 .chat__strategies-button {
     display: block;
     padding: 0.7rem 1rem;
-    border: 1px solid #000000;
+    border: 1px solid #1F8FFD;
     cursor: pointer;
     background-color: #1F8FFD;
     font-size: .8rem;
-    color: rgb(0, 0, 0);
+    color: #fff;
     border-radius: .4rem;
 }
 /* CHAT SUGGESTIONS */
@@ -125,7 +125,7 @@ section.chat__body {
     border: 1px solid #E5E5E5;
     cursor: pointer;
     background-color: #fff;
-    font-size: .6rem;
+    font-size: .8rem;
     border-radius: .4rem;
 }
 /* Chat Input */
@@ -160,6 +160,10 @@ section.chat__body {
 }
 
 /* Suggestions Section */
+.alert_buttons {
+    font-size: .4rem;
+}
+
 .alert_button {
     display: block;
     padding: 0.2rem 0.5rem;
