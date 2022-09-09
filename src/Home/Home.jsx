@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import io from "socket.io-client";
 import "./Home.css";
 
-let endPoint = "http://35.188.189.237:8000";
+//let endPoint = "http://35.188.189.237:8000";
 let socket = io.connect(`${endPoint}`);
 
 const Home = () => {
